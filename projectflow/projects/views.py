@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -18,6 +18,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         project = serializer.save(owner=self.request.user)
         ProjectMember.objects.create(user=self.request.user, project=project, role="admin")
+
+    def retrieve(self, request, *args, **kwargs):
+        project = self.get_object()
+
+        # Проверка: является ли пользователь владельцем или участником
+        if request.user != project.owner and not project.members.filter(id=request.user.id).exists():
+            return Response({'detail': 'У вас нет доступа к этому проекту, вы не являетесь участником.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.get_serializer(project)
+        return Response(serializer.data)
 
     @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated], url_path='generate_invite')
     def generate_invite(self, request, pk=None):
