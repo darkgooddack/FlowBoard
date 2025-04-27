@@ -17,3 +17,42 @@ FlowBoard - удобная система управления задачами 
 - Назначение участников
 ### Notifications:
 - Автоматическое создание уведомлений при смене статуса на "Готово"
+
+
+## API Documentation
+### Регистрация
+POST /api/register/
+
+Request:
+```
+{
+  "username": "user",
+  "email": "user@example.com",
+  "password": "strongpassword123"
+}
+```
+Response:
+```
+{
+    "username": "user",
+    "email": "user@example.com"
+}
+```
+
+### Авторизация
+POST /api/login/
+
+Request:
+```
+{
+  "email": "user@example.com",
+  "password": "strongpassword123"
+}
+```
+Response:
+```
+{
+  "access": "your_access_token_here",
+  "refresh": "your_refresh_token_here"
+}
+```
