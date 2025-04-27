@@ -94,3 +94,28 @@ Authorization: Bearer <your_token>
     "status": "Joined project by invite link"
 }
 ```
+
+POST /api/projects/
+
+Authorization: Bearer <your_token>
+
+Request:
+```
+{
+    "name": "FlowBoard MVP",
+    "description": "Проект для управления задачами."
+}
+```
+Response:
+```
+{
+    "id": 3,
+    "name": "FlowBoard MVP",
+    "description": "Проект для управления задачами.",
+    "invite_token": "xwuXs8pZNjHbHLwBreqGe1drGovqQIhx3k_x_o6hJHM",
+    "owner": 5,
+    "members": [
+        5
+    ]
+}
+```
