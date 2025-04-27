@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'projects',
     'tasks',
     'notifications',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {

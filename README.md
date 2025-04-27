@@ -21,7 +21,7 @@ FlowBoard - удобная система управления задачами 
 
 ## API Documentation
 ### Регистрация
-POST /api/register/
+POST /api/users/register/
 
 Request:
 ```
@@ -40,13 +40,13 @@ Response:
 ```
 
 ### Авторизация
-POST /api/login/
+POST /api/users/login/
 
 Request:
 ```
 {
-  "email": "user@example.com",
-  "password": "strongpassword123"
+    "username": "user",
+    "password": "strongpassword123"
 }
 ```
 Response:
@@ -54,5 +54,43 @@ Response:
 {
   "access": "your_access_token_here",
   "refresh": "your_refresh_token_here"
+}
+```
+
+### Проекты
+
+GET /api/projects/2
+
+Authorization: Bearer <your_token>
+
+Response:
+```
+{
+    "id": 2,
+    "name": "Попытка номер 2",
+    "description": "Попытка номер 2 описание",
+    "invite_token": "SOtEh_RiJ1nTbmQXLLs50Mx4E6q9DFFrPfUZR3qRu-bIfMvuocsQGJtigIHtnkipXuXUd-5b9dTJFxSMuz9-3w",
+    "owner": 4,
+    "members": [
+        5
+    ]
+}
+```
+
+GET /api/projects/2/generate_invite/
+
+Authorization: Bearer <your_token>
+```
+{
+    "invite_url": "http://127.0.0.1:8000/api/projects/invite/SOtEh_RiJ1nTbmQXLLs50Mx4E6q9DFFrPfUZR3qRu-bIfMvuocsQGJtigIHtnkipXuXUd-5b9dTJFxSMuz9-3w/"
+}
+```
+
+GET /api/invite/SOtEh_RiJ1nTbmQXLLs50Mx4E6q9DFFrPfUZR3qRu-bIfMvuocsQGJtigIHtnkipXuXUd-5b9dTJFxSMuz9-3w/
+
+Authorization: Bearer <your_token>
+```
+{
+    "status": "Joined project by invite link"
 }
 ```
