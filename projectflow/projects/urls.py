@@ -10,3 +10,4 @@ urlpatterns = [
     path('<int:pk>/generate_invite/', ProjectViewSet.as_view({'get': 'generate_invite'}), name='project-generate-invite'),
     path('invite/<str:token>/', ProjectViewSet.as_view({'get': 'join_by_token'}), name='project-join-by-token'),
 ]
+# path('join_by_token/<str:token>/', ProjectViewSet.as_view({'get': 'join_by_token'}), name='project-join-by-token'),

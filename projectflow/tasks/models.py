@@ -12,7 +12,6 @@ class Status(models.Model):
 
 class Label(models.Model):
     name = models.CharField(max_length=50)
-    color = models.CharField(max_length=50)
 
 
 class Task(models.Model):
@@ -22,9 +21,9 @@ class Task(models.Model):
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
     labels = models.ManyToManyField(Label, blank=True, related_name='tasks')
     assignees = models.ManyToManyField(User, blank=True, related_name='assignees_tasks')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks')
-    started_at = models.DateField(auto_now_add=True)
-    due_date = models.DateField(null=True, blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks') # кем создана задача
+    started_at = models.DateField(auto_now_add=True) # дата начала
+    due_date = models.DateField(null=True, blank=True) # дата окончания
 
 class TaskComment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
