@@ -70,7 +70,7 @@ Response:
     "name": "Попытка номер 2",
     "description": "Попытка номер 2 описание",
     "invite_token": "SOtEh_RiJ1nTbmQXLLs50Mx4E6q9DFFrPfUZR3qRu-bIfMvuocsQGJtigIHtnkipXuXUd-5b9dTJFxSMuz9-3w",
-    "owner": 4,
+    "owner": 5,
     "members": [
         5
     ]
