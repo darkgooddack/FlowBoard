@@ -59,6 +59,15 @@ Response:
 
 ### Проекты
 
+GET /api/projects/
+
+Authorization: Bearer <your_token>
+
+Response:
+```
+Список всех проектов, к которым принадлежит пользователь
+```
+
 GET /api/projects/2
 
 Authorization: Bearer <your_token>
@@ -124,4 +133,127 @@ Response:
         5
     ]
 }
+```
+### Задачи
+
+GET /api/tasks/
+
+Вернёт задачи по всем проектам, к которым принадлежит пользователь.
+
+GET api/tasks/?project=1
+
+Вернёт задачи по проекту.
+
+Authorization: Bearer <your_token>
+
+Response:
+```
+[
+    {
+        "id": 1,
+        "assignees": [
+            "ulyana",
+            "andrey"
+        ],
+        "labels": [
+            "Баг",
+            "Frontend"
+        ],
+        "status": "К выполнению",
+        "created_by": "user",
+        "project": "Проект 4-ого пользователя",
+        "title": "Первая задача",
+        "description": "Описание первой задачи 6 проекта",
+        "started_at": "2025-04-29",
+        "due_date": "2025-04-29"
+    }
+]
+```
+
+POST /api/tasks/
+
+Authorization: Bearer <your_token>
+
+Request:
+```
+{
+    "assignees": ["user", "test"],
+    "labels": ["Баг", "Frontend"],
+    "status": "К выполнению",
+    "project": "Попытка номер 2",
+    "title": "Задача проекта 'Попытка номер 2', баг",
+    "description": "Описание задачи",
+    "due_date": "2025-04-29"
+}
+
+```
+Response:
+```
+{
+    "id": 2,
+    "assignees": [
+        "user",
+        "test"
+    ],
+    "labels": [
+        "Баг",
+        "Frontend"
+    ],
+    "status": "К выполнению",
+    "project": "Попытка номер 2",
+    "created_by": "ulyana",
+    "title": "Задача проекта 'Попытка номер 2', баг",
+    "description": "Описание задачи",
+    "started_at": "2025-04-29",
+    "due_date": "2025-04-29"
+}
+```
+
+POST /api/tasks/2/comments_create/
+
+Если вы участник проекта, к которому принадлежит задача.
+
+Authorization: Bearer <your_token>
+
+Request:
+```
+{
+    "content": "Это комментарий к задаче"
+}
+```
+Response:
+```
+{
+    "id": 2,
+    "user": "ulyana",
+    "task": "Задача проекта 'Попытка номер 2', баг",
+    "created_at": "2025-04-29T10:03:43.646555Z",
+    "content": "Это комментарий номер 2 к задаче"
+}
+```
+
+GET /api/tasks/2/comments_list/
+
+Если вы участник проекта, к которому принадлежит задача.
+
+Authorization: Bearer <your_token>
+
+Response:
+```
+[
+    {
+        "id": 1,
+        "user": "ulyana",
+        "task": "Задача проекта 'Попытка номер 2', баг",
+        "created_at": "2025-04-29T09:48:19.870736Z",
+        "content": "Это комментарий к задаче"
+    },
+    {
+        "id": 2,
+        "user": "ulyana",
+        "task": "Задача проекта 'Попытка номер 2', баг",
+        "created_at": "2025-04-29T10:03:43.646555Z",
+        "content": "Это комментарий номер 2 к задаче"
+    }
+]
 ```

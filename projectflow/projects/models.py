@@ -13,6 +13,9 @@ class Project(models.Model):
     members = models.ManyToManyField(User, through="ProjectMember", related_name="projects")
     invite_token = models.CharField(max_length=255, unique=True, default=secrets.token_urlsafe)
 
+    def __str__(self):
+        return self.name
+
 
 class ProjectMember(models.Model):
     ROLE_CHOICES = (

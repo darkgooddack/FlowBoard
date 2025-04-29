@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -18,6 +19,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         project = serializer.save(owner=self.request.user)
         ProjectMember.objects.create(user=self.request.user, project=project, role="admin")
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Project.objects.filter(
+            Q(members=user) | Q(owner=user)
+        )
+        return queryset.distinct()
 
     def retrieve(self, request, *args, **kwargs):
         project = self.get_object()
@@ -48,7 +56,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response({'invite_url': invite_url})
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
-    def join_by_token(self, request, token=None):
+    def invite(self, request, token=None):
         try:
             # Ищем проект по токену
             project = Project.objects.get(invite_token=token)
